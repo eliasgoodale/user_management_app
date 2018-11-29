@@ -13,7 +13,6 @@ const displayError = (error: any) => ({
     payload: error,
 })
 
-
 const syncTableWithCollection = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => 
         type === 'users/GET_ALL_FULFILLED' || 

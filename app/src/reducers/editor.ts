@@ -39,8 +39,18 @@ export default (state: any = initialState, action: any) => {
                 inEdit: null,
                 inCreateMode: false,
                 editIndex: -1,
-                data: action.payload,
+                userInEdit: [{id: null}],
+                data: action.payload.map((u: User) => {
+                    return { ...u, password: "" }
+                }),
             };
+        case 'users/UPDATE_FULFILLED':
+            return {
+                ...state,
+                inEdit: null,
+                userInEdit: [{id: null}],
+                editIndex: -1,
+            }
         case 'users/CHANGE_USER_PASSWORD':
             return {
                 ...state, 
@@ -56,7 +66,7 @@ export default (state: any = initialState, action: any) => {
                 data: newData,
                 inEdit: "temp",
                 editIndex: 0,
-                userInEdit: [{...newData[0]}],
+                userInEdit: newData.filter((u: User) => u.id === "temp"),
                 inCreateMode: true
             }
         default:

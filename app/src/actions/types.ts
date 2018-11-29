@@ -8,7 +8,7 @@ export interface CancelChanges {
 
 export interface ChangeFilter {
     type: 'users/CHANGE_FILTER',
-    payload: CompositeFilterDescriptor,
+    payload: CompositeFilterDescriptor | null,
 }
 
 export interface ChangeSort {
@@ -58,11 +58,6 @@ export interface TogglePasswordModal {
 
 export interface ToggleDeleteConfirmation {
     type: 'users/TOGGLE_DELETE_CONFIRMATION'
-}
-
-export interface ChangeUserDataPassword {
-    type: 'users/CHANGE_USER_PASSWORD',
-    payload: any,
 }
 
 export interface UpdateUser {

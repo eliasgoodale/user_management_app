@@ -13,7 +13,7 @@ export const cancelChanges = (rollbackData: User[]): Types.CancelChanges => ({
     payload: rollbackData,
 });
 
-export const changeFilter = (filter: CompositeFilterDescriptor): Types.ChangeFilter => ({
+export const changeFilter = (filter: CompositeFilterDescriptor | null): Types.ChangeFilter => ({
     type: 'users/CHANGE_FILTER',
     payload: filter,
 });
@@ -46,6 +46,7 @@ export const getAllUsers = (): Types.GetAllUsers => ({
     payload: client.endpoints.users.getAll(),
 });
 
+
 export const updateUser = (toUpdate: Partial<Pick<User, 'id'>>): Types.UpdateUser => ({
     type: 'users/UPDATE',
     payload: client.endpoints.users.update(toUpdate)
@@ -62,22 +63,12 @@ export const selectRow = (itemID: string): Types.EditIdChange => ({
     payload: itemID,
 });
 
-
-
-
-
 export const syncData = (data: User[]): Types.SyncData => ({
     type: 'users/SYNC_DATA',
     payload: data.map((u: User)=>{
         return {...u, password: ""}
     }),
 })
-
-
-
-
-
-
 
 export const togglePasswordModal = (): Types.TogglePasswordModal => ({
     type: 'users/TOGGLE_PASSWORD_MODAL'
@@ -87,7 +78,20 @@ export const toggleDeleteConfirmation = (): Types.ToggleDeleteConfirmation => ({
     type: 'users/TOGGLE_DELETE_CONFIRMATION',
 })
 
-export const changeUserPassword = (patch: any): Types.ChangeUserDataPassword => ({
+/**
+ * Scafolding Actions
+ */
+
+
+export const logPatchRequest = (patch: any) => ({
+    type: 'LOG_JSON_PATCH_DOCUMENT',
+    payload: patch
+})
+
+export const changeUserPassword = (patch: any) => ({
     type: 'users/CHANGE_USER_PASSWORD',
     payload: client.endpoints.users.update(patch),
 })
+
+
+

@@ -30,7 +30,7 @@ export default (state: any = initialState, action: any) => {
             }
         case 'users/CREATE_FULFILLED':
                 const newData = [...state.data];
-                newData.unshift(action.payload.data);
+                newData.unshift({...action.payload.data, password: ""});
             return {
                 ...state,
                 data: newData,
@@ -42,7 +42,9 @@ export default (state: any = initialState, action: any) => {
                 ...state, 
                 fetching: false, 
                 fetched: true,
-                data: action.payload.data,
+                data: action.payload.data.map((u: User) => {
+                    return { ...u, password: "" }
+                }),
             }
         case 'users/GET_ALL_REJECTED':
             return {

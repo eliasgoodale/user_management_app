@@ -61,7 +61,7 @@ export const newUserTemplate: User = {
     firstName: "",
     lastName: "",
     username: "",
-    password: "Circular>>0x08<<",
+    password: "",
     isActive: true,
     isEntryAdmin: false,
     isListAdmin: false,

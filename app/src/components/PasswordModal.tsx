@@ -91,7 +91,7 @@ class PasswordModal extends React.Component <any, {}>{
 				onClose={togglePasswordModal}>
 			<PasswordForm
 				inEdit={inEdit}
-				onPasswordSubmit={inCreateMode ? createPassword : updatePassword} 
+				onPasswordSubmit={createPassword} 
 				newVal="" />
 		</Dialog>}
 		</React.Fragment>

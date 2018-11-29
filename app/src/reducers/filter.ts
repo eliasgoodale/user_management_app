@@ -1,6 +1,6 @@
 import { CompositeFilterDescriptor } from "@progress/kendo-data-query";
 
-const initialState: CompositeFilterDescriptor = {
+const initialState: CompositeFilterDescriptor | null = {
     logic: "or",
     filters: [{ 
         field: "isActive", 

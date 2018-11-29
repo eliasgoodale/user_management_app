@@ -38,6 +38,7 @@ interface UserGridProps {
   onRowClick(e: GridRowClickEvent): void;
   onItemChange(e: GridItemChangeEvent): void;
   onFilterChange(e: GridFilterChangeEvent): void;
+  changeFilter(filter: CompositeFilterDescriptor): void;
   getAllUsers(): void;
   syncData(data: User[]): void;
 }
@@ -152,6 +153,7 @@ class UserGrid extends Component<UserGridProps, {}> {
       onSortChange,
       onRowClick,
       onItemChange,
+      changeFilter,
       onFilterChange } = this.props
 
       /**
@@ -196,6 +198,15 @@ class UserGrid extends Component<UserGridProps, {}> {
         <Button onClick={getAllUsers}>
           Get Data 
         </Button>
+
+        <Button onClick={() => changeFilter({logic: "and", filters: [{field: "isActive", operator: "eq", value: false}]})}>
+        Show Inactive
+        </Button>
+
+        <Button onClick={() => changeFilter({logic: "and", filters: [{field: "isActive", operator: "eq", value: true}]})}>
+        Show Active
+        </Button>
+
       </React.Fragment>
     );
   }
@@ -229,16 +240,19 @@ function mapStateToProps(state: GridState) {
 function mapDispatchToProps(dispatch: any) {
   return {
     onSortChange: (e: GridSortChangeEvent) => {
-      dispatch(UserActionGroup.changeSort(e.sort))
+      dispatch(UserActionGroup.changeSort(e.sort));
     },
     onRowClick: (e: GridRowClickEvent) => {
-      dispatch(UserActionGroup.selectRow(e.dataItem.id))
+      dispatch(UserActionGroup.selectRow(e.dataItem.id));
     },
     onItemChange: (e: GridItemChangeEvent) => {
-      dispatch(UserActionGroup.changeUserData(e.dataItem.id, e.field, e.value))
+      dispatch(UserActionGroup.changeUserData(e.dataItem.id, e.field, e.value));
     },
     onFilterChange: (e: GridFilterChangeEvent) => {
       dispatch(UserActionGroup.changeFilter(e.filter))
+    },
+    changeFilter: (filter: CompositeFilterDescriptor) => {
+      dispatch(UserActionGroup.changeFilter(filter));
     },
     syncData: (data: User[]) => {
       dispatch(UserActionGroup.syncData(data));

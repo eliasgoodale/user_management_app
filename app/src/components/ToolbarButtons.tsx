@@ -6,10 +6,12 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel'
 import VpnKey from '@material-ui/icons/VpnKey'
 import * as ActionGroup from '../actions';
-import { User } from '../types';
+import { User, newUserTemplate } from '../types';
 import { connect } from 'react-redux';
 import { userPassesConstraintValidation as valid } from '../validation'
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
+
+import { compare } from 'fast-json-patch';
 
 const styles = ({
   container: {
@@ -61,13 +63,17 @@ class ToolbarButtons extends Component <any, {}> {
       backupData,
       userInEdit,
       inEdit,
+      logPatchRequest,
+      inCreateMode,
       createUser,
       updateUser,
       showDeleteConfirmation,
       toggleDeleteConfirmation,
       softDeleteUser } = this.props;
-    const backupUserData = backupData.find((user: User) => user.id === inEdit);
+    const backupUserData = inCreateMode ? newUserTemplate : backupData.find((user: User) => user.id === inEdit);
     const changed = JSON.stringify(userInEdit[0]) !== JSON.stringify(backupUserData)
+    console.table(userInEdit[0])
+    console.table(backupUserData);
   return (
     
   <div style={styles.container} >
@@ -92,8 +98,22 @@ class ToolbarButtons extends Component <any, {}> {
       </Button>
       <Button 
         variant="contained" size="small" style={styles.button} 
-        disabled={!changed || !valid(userInEdit[0])}
-        onClick={e => inEdit === 'temp' ? createUser(userInEdit): updateUser(userInEdit)}>
+        disabled={!changed || !valid(userInEdit[0], inCreateMode)}
+        onClick={e => inEdit === 'temp' ? 
+          createUser(userInEdit[0]) :
+
+          /*
+          * Dev log of patch request 
+          */ 
+
+          logPatchRequest({id: userInEdit[0].id, patch: compare(backupUserData, userInEdit[0])})
+          
+          /**
+           * Uncomment to test patch functionality with json-server
+           */
+
+          //updateUser(userInEdit[0])
+          }>
         <SaveIcon style={styles.icon} />
         Save
       </Button>
@@ -116,6 +136,7 @@ class ToolbarButtons extends Component <any, {}> {
 
 function mapStateToProps (state: any) {
   return {
+    inCreateMode: state.editor.inCreateMode,
     backupData: state.collection.data,
     tableData: state.editor.data,
     inEdit: state.editor.inEdit,
@@ -142,6 +163,9 @@ function mapDispatchToProps (dispatch: any) {
     },
     softDeleteUser: (toDelete: User) =>{
       dispatch(ActionGroup.softDeleteUser(toDelete))
+    },
+    logPatchRequest: (patch: any) => {
+      dispatch(ActionGroup.logPatchRequest(patch))
     },
     togglePasswordModal: () => {
       dispatch(ActionGroup.togglePasswordModal())
