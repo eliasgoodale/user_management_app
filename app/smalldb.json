@@ -1,0 +1,121 @@
+{
+  "users": [
+    {
+      "id": "2b860e13-7959-4264-a2c6-0a8409031c91",
+      "firstName": "Whites",
+      "lastName": "Shannons",
+      "password": "eli[ui",
+      "isActive": false,
+      "isEntryAdmin": true,
+      "isListAdmin": true,
+      "isLocationManager": true,
+      "isOperatorAdmin": true,
+      "isUserAdmin": false,
+      "username": "SWhites"
+    },
+    {
+      "id": "e235d86b-b3af-4465-88aa-267ced55d053",
+      "firstName": "What",
+      "lastName": "Williams",
+      "password": "somethingNew",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": true,
+      "isLocationManager": true,
+      "isOperatorAdmin": true,
+      "isUserAdmin": true,
+      "username": "CWilliadsfsadfms"
+    },
+    {
+      "id": "zcduJT8",
+      "firstName": "Bob",
+      "lastName": "NewUser",
+      "username": "BnewUserfadsfdsaf",
+      "password": "superGuy",
+      "isActive": true,
+      "isEntryAdmin": true,
+      "isListAdmin": true,
+      "isLocationManager": true,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "aVIXzeF",
+      "firstName": "isss",
+      "lastName": "aguy",
+      "username": "Wellpt",
+      "password": "Circular>>0x08<<",
+      "isActive": true,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "pwVGZjv",
+      "firstName": "Ben",
+      "lastName": "Jones",
+      "username": "BJones",
+      "password": "Circular>>0x08<<",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": true,
+      "isUserAdmin": true
+    },
+    {
+      "id": "M7PftYS",
+      "firstName": ";ln.n.n.,m.,mm ",
+      "lastName": "mm,b,n.kn,mn,m",
+      "username": "\\[ol'pk'",
+      "password": "kjhkjhkjhk",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "SQKSzWw",
+      "firstName": "Bob",
+      "lastName": "Towny",
+      "username": "BobTowny",
+      "password": "Circular>>0x08<<",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "6rSn2hg",
+      "firstName": "sdfasdfadsf",
+      "lastName": "dsfasdfsadf",
+      "username": "fsdfaf",
+      "password": "Circular>>0x08<<",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "BnpxK3Z",
+      "firstName": "thorton",
+      "lastName": "babbbdy",
+      "username": "bob fdsfsdf",
+      "password": "Circular>>0x08<<",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    }
+  ]
+}
