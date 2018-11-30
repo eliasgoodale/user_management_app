@@ -31,7 +31,7 @@ const styles = ({
 });
 
 const DeleteDialog = (props: any ) => {
-  const { visible, softDeleteUser, close, userInEdit } = props;
+  const { visible, updateUser, close, userInEdit } = props;
   return (
   <React.Fragment>
     {visible &&  <Dialog title={"Confirm Delete"} onClose={close}>
@@ -42,7 +42,7 @@ const DeleteDialog = (props: any ) => {
         Cancel
         </Button>
       <Button variant="contained" size="small" color="primary" style={styles.buttonRight}
-        onClick={e => softDeleteUser({...userInEdit, isActive: false})}>
+        onClick={e => updateUser({id:userInEdit.id, isActive: false})}>
         Confirm
         </Button>
       </div>
@@ -69,8 +69,7 @@ class ToolbarButtons extends Component <any, {}> {
       createUser,
       updateUser,
       showDeleteConfirmation,
-      toggleDeleteConfirmation,
-      softDeleteUser } = this.props;
+      toggleDeleteConfirmation } = this.props;
    
     const changed = JSON.stringify(userInEdit) !== JSON.stringify(backupUserData)
   return (
@@ -79,7 +78,7 @@ class ToolbarButtons extends Component <any, {}> {
     <DeleteDialog 
       userInEdit={userInEdit} 
       visible={showDeleteConfirmation} 
-      softDeleteUser={softDeleteUser} 
+      updateUser={updateUser} 
       close={toggleDeleteConfirmation} />
       <Button  
         variant="contained" size="small" color="secondary" style={styles.button}
@@ -123,6 +122,7 @@ class ToolbarButtons extends Component <any, {}> {
 function mapStateToProps (state: any) {
   return {
     inEdit: state.validation.inEdit,
+    showDeleteConfirmation: state.ui.showDeleteConfirmation,
     backupUserData: state.validation.backupUserData,
     userInEdit: state.validation.userInEdit,
     validator: state.validation.validator,
@@ -159,9 +159,6 @@ function mapDispatchToProps (dispatch: any) {
     },
     updateUser: (updateUser: Partial<Pick<User, 'id'>>) => {
       dispatch(ActionGroup.updateUser(updateUser))
-    },
-    softDeleteUser: (toDelete: User) =>{
-      dispatch(ActionGroup.softDeleteUser(toDelete))
     },
     togglePasswordModal: () => {
       dispatch(ActionGroup.togglePasswordModal())

@@ -4,6 +4,13 @@ import { map, filter, withLatestFrom} from 'rxjs/operators';
 import { User } from '../types';
 import { orderBy, filterBy } from '@progress/kendo-data-query'
 
+
+
+const logValue = (payload: any) => ({
+    type: "LOG_VALUE",
+    payload: payload
+})
+
 const displayError = (error: any) => ({
     type: "DISPLAY_ERROR",
     payload: error,
