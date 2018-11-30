@@ -13,7 +13,7 @@ const validator = (user: User ): boolean => {
    return constraintValidator(toValidate); 
 }
 
-const initialState: ValidationState = {
+const initialState: any = {
     validator: validator,
     generatePatch: compare,
     patch: [],
@@ -24,6 +24,8 @@ const initialState: ValidationState = {
 
 export default (state: any = initialState, action: any) => {
     switch(action.type) {
+        case 'users/RESET_VALIDATION_STATE':
+            return initialState;
         case 'users/CHANGE_USER_DATA':
             const {id, field, value} = action.payload;
             const newData = { ...state.userInEdit, [field]: value };
@@ -48,12 +50,6 @@ export default (state: any = initialState, action: any) => {
                 userInEdit: newUserTemplate,
                 backupUserData: newUserTemplate,
             }
-        case 'users/UPDATE_FULFILLED':
-            return initialState;
-        case 'users/CANCEL_CHANGES':
-            return initialState;
-        case 'users/CREATE_FULFILLED':
-            return initialState;
         case 'users/LOAD_BACKUP':
             return {
                 ...state,

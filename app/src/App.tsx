@@ -14,6 +14,8 @@ import {
   GridToolbar, 
   GridSelectionChangeEvent} from '@progress/kendo-react-grid'
 
+import { Operation } from 'fast-json-patch';
+
 import { 
   CompositeFilterDescriptor, 
   SortDescriptor, 
@@ -33,6 +35,7 @@ interface UserGridProps {
   data: User[];
   sort: SortDescriptor[];
   filter: CompositeFilterDescriptor;
+  patch: Operation [],
   inEdit: string | null;
   editIndex: number;
   inCreateMode: boolean;
@@ -150,10 +153,12 @@ class UserGrid extends Component<UserGridProps, {}> {
     const {
       /* State from mapStateToProps */
       data,
+      editIndex,
       filter,
       inEdit,
+      patch,
       sort,
-      editIndex,
+  
 
       /* Action Creators from mapDispatchToProps */
       getAllUsers,
@@ -179,12 +184,10 @@ class UserGrid extends Component<UserGridProps, {}> {
       const currentIndex = tableData.findIndex((u: User) => u.id === inEdit);
       
       if (editIndex !== -1 && editIndex !== currentIndex) {
-        const swap = { ...tableData[currentIndex] };
-        const needsToBe = { ...tableData[editIndex] };
-        tableData[currentIndex] = needsToBe;
+        const swap = tableData[currentIndex];
+        tableData[currentIndex] = tableData[editIndex];
         tableData[editIndex] = swap;
       }
-      
 
     return (
       <React.Fragment>
@@ -197,11 +200,7 @@ class UserGrid extends Component<UserGridProps, {}> {
           filter={filter}
           editField="inEdit"
           onSortChange={onSortChange}
-          onSelectionChange={onRowClick}
-          onRowClick={(e: GridRowClickEvent) => {
-            console.log(e);
-            onRowClick(e)
-          }}
+          onRowClick={patch.length > 0 ? (e)=>{console.log(e)} : onRowClick}
           onItemChange={onItemChange}
           onFilterChange={onFilterChange}
           filterable
@@ -238,6 +237,7 @@ function mapStateToProps(state: GridState) {
     editIndex: state.editor.editIndex,
     sort: state.sort,
     filter: state.filter,
+    patch: state.validation.patch
   }
 }
 

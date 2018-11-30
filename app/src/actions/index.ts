@@ -50,7 +50,7 @@ export const updateUser = (toUpdate: Partial<Pick<User, 'id'>>): Types.UpdateUse
     payload: client.endpoints.users.update(toUpdate)
 });
 
-export const softDeleteUser = (toDelete: User): Types.SoftDeleteUser => ({
+export const softDeleteUser = (toDelete: Partial<Pick<User, 'id'>>): Types.SoftDeleteUser => ({
     type: 'users/SOFT_DELETE',
     payload: client.endpoints.users.update(toDelete),
 })

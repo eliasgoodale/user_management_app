@@ -30,33 +30,21 @@
       "id": "zcduJT8",
       "firstName": "Bobsss",
       "lastName": "NewUdser",
-      "username": "BnffewUserfadsfdsaf",
-      "password": "ffffffff",
-      "isActive": true,
+      "username": "aBnffewUserfadsfdsaf",
+      "password": "",
+      "isActive": false,
       "isEntryAdmin": true,
       "isListAdmin": false,
       "isLocationManager": false,
       "isOperatorAdmin": false,
-      "isUserAdmin": false,
-      "patch": [
-        {
-          "op": "replace",
-          "path": "/password",
-          "value": "changedPassword"
-        },
-        {
-          "op": "replace",
-          "path": "/username",
-          "value": "BnffewsUserfadsfdsaf"
-        }
-      ]
+      "isUserAdmin": false
     },
     {
       "id": "aVIXzeF",
-      "firstName": "ssssssN",
+      "firstName": "abcdef",
       "lastName": "sssssN",
-      "username": "ssssss",
-      "password": "howdyyo",
+      "username": "This is a thing",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": true,
       "isListAdmin": true,
@@ -131,11 +119,11 @@
     },
     {
       "id": "Lz49v0L",
-      "firstName": "new",
+      "firstName": "anew",
       "lastName": "User",
-      "username": "newUser",
-      "password": "password",
-      "isActive": true,
+      "username": "another",
+      "password": "",
+      "isActive": false,
       "isEntryAdmin": false,
       "isListAdmin": false,
       "isLocationManager": false,

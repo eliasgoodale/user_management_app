@@ -23,15 +23,13 @@ const loadBackup = (backupData: any) => {
             type: 'users/LOAD_BACKUP',
             payload: backupData[0]
         } : 
-        {
-            type: 'users/LOAD_BACKUP_FAILURE',
-        }
+        { type: 'users/LOAD_BACKUP_FAILURE' }
     )
 };
 
-// const lockuserInEditToTopIndex = () => ({
-//     type: 'users/LOCK_IN_EDIT_TOP',
-// })
+const resetValidationState = () => ({
+    type: 'users/RESET_VALIDATION_STATE',
+})
 
 const syncTableWithCollection = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => 
@@ -46,12 +44,14 @@ const syncTableWithCollection = (action$: any, state$: any) => action$.pipe(
                         state$.value.sort)))
 )
 
-// const handleChangeUserInEdit = (action$: any, state$: any) => action$.pipe(
-//     filter(({ type }: any) => 
-//         type === 'users/CHANGE_USER_DATA'),
-//     withLatestFrom(state$),
-//     map(() => syncData(state$.value.collection.data))
-// )
+const handleValidationStateReset = (action$: any, state$: any) => action$.pipe(
+    filter(({ type }: any) => 
+        type === 'users/UPDATE_FULFILLED' || 
+        type === 'users/CANCEL_CHANGES' ||
+        type === 'users/CREATED_FULFILLED' ||
+        type === 'users/SOFT_DELETE_FULFILLED'),
+    map(() => resetValidationState())
+)
 
 const handleRequestError = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => type.includes('REJECTED')),
@@ -71,7 +71,8 @@ const loadEditUserBackup = (action$: any, state$: any) => action$.pipe(
 )
 
 export default combineEpics(
-    handleRequestError, 
+    handleRequestError,
+    handleValidationStateReset,
     handleSoftDelete,
     loadEditUserBackup,
     syncTableWithCollection, 

@@ -1,4 +1,5 @@
 import { SortDescriptor, CompositeFilterDescriptor } from "@progress/kendo-data-query";
+import { Operation } from 'fast-json-patch'
 
 export type CollectionState = {
     fetching: boolean,
@@ -29,7 +30,7 @@ export type UIState = {
 export type ValidationState = {
     validator: any,
     generatePatch: any,
-    patch: [],
+    patch: Operation [],
     inEdit: string | null,
     userInEdit: Partial<Pick<User, "id">>,
     backupUserData: Partial<Pick<User, "id">>,

@@ -31,7 +31,7 @@ const styles = ({
 });
 
 const DeleteDialog = (props: any ) => {
-  const { visible, updateUser, close, userInEdit } = props;
+  const { visible, softDeleteUser, close, userInEdit } = props;
   return (
   <React.Fragment>
     {visible &&  <Dialog title={"Confirm Delete"} onClose={close}>
@@ -42,7 +42,7 @@ const DeleteDialog = (props: any ) => {
         Cancel
         </Button>
       <Button variant="contained" size="small" color="primary" style={styles.buttonRight}
-        onClick={e => updateUser({id:userInEdit.id, isActive: false})}>
+        onClick={() => softDeleteUser({id:userInEdit.id, isActive: false})}>
         Confirm
         </Button>
       </div>
@@ -68,57 +68,57 @@ class ToolbarButtons extends Component <any, {}> {
       enterCreateMode,
       createUser,
       updateUser,
+      softDeleteUser,
       showDeleteConfirmation,
       toggleDeleteConfirmation } = this.props;
    
     const changed = JSON.stringify(userInEdit) !== JSON.stringify(backupUserData)
   return (
-    
-  <div style={styles.container} >
-    <DeleteDialog 
-      userInEdit={userInEdit} 
-      visible={showDeleteConfirmation} 
-      updateUser={updateUser} 
-      close={toggleDeleteConfirmation} />
-      <Button  
-        variant="contained" size="small" color="secondary" style={styles.button}
-        disabled={inEdit === null || inEdit === 'temp'}
-        onClick={toggleDeleteConfirmation}>
-      <DeleteIcon style={styles.icon} />
-        Delete
-      </Button>
-      <Button 
-        variant="contained" size="small"color="primary" style={styles.button}
-        disabled={inEdit !== null}
-        onClick={enterCreateMode}>
-      <AddIcon style={styles.icon}/>
-        Create
-      </Button>
-      <Button 
-        variant="contained" size="small" style={styles.button} 
-        disabled={!changed || !validator(userInEdit)}
-        onClick={() => inEdit === 'temp' ? 
-          createUser(userInEdit): 
-          updateUser(inDEV ? userInEdit : {id: userInEdit.id, patch: patch})}>
-        <SaveIcon style={styles.icon} />
-        Save
-      </Button>
-      <Button variant="contained" size="small" style={styles.button}
-        disabled={!inEdit}
-        onClick={e => cancelChanges(backupData)}>
-        <CancelIcon style={styles.icon} />
-        Cancel
-      </Button>
-      {inEdit !== null && <Button variant="contained" size="small" style={styles.buttonRight}
-        onClick={togglePasswordModal}>
-        <VpnKey style={styles.icon}/>
-        Manage Password
-      </Button>}
+    <div style={styles.container} >
+      <DeleteDialog 
+        userInEdit={userInEdit} 
+        visible={showDeleteConfirmation} 
+        softDeleteUser={softDeleteUser} 
+        close={toggleDeleteConfirmation} />
+        <Button  
+          variant="contained" size="small" color="secondary" style={styles.button}
+          disabled={inEdit === null || inEdit === 'temp'}
+          onClick={toggleDeleteConfirmation}>
+        <DeleteIcon style={styles.icon} />
+          Delete
+        </Button>
+        <Button 
+          variant="contained" size="small"color="primary" style={styles.button}
+          disabled={inEdit !== null}
+          onClick={enterCreateMode}>
+        <AddIcon style={styles.icon}/>
+          Create
+        </Button>
+        <Button 
+          variant="contained" size="small" style={styles.button} 
+          disabled={!changed || !validator(userInEdit)}
+          onClick={() => inEdit === 'temp' ? 
+            createUser(userInEdit): 
+            updateUser(inDEV ? userInEdit : {id: userInEdit.id, patch: patch})}>
+          <SaveIcon style={styles.icon} />
+          Save
+        </Button>
+        <Button variant="contained" size="small" style={styles.button}
+          disabled={!inEdit}
+          onClick={e => cancelChanges(backupData)}>
+          <CancelIcon style={styles.icon} />
+          Cancel
+        </Button>
+        {inEdit !== null && <Button variant="contained" size="small" style={styles.buttonRight}
+          onClick={togglePasswordModal}>
+          <VpnKey style={styles.icon}/>
+          Manage Password
+        </Button>}
+      </div>
+    );
+  }
+}
 
-    </div>
-  );
-}
-}
 function mapStateToProps (state: any) {
   return {
     inEdit: state.validation.inEdit,
@@ -128,23 +128,9 @@ function mapStateToProps (state: any) {
     validator: state.validation.validator,
     patch: state.validation.patch,
     generatePatch: state.validation.generatePatch,
-    /** 
-     * LINKED TO COLLECTION
-     */
     backupData: state.collection.data,
   }
 }
-// function mapStateToProps (state: any) {
-//   return {
-//     backupData: state.collection.data,
-//     tableData: state.editor.data,
-//     inEdit: state.editor.inEdit,
-//     userInEdit: state.editor.userInEdit,
-//     classes: styles,
-//     showPasswordModal: state.ui.showPasswordModal,
-//     showDeleteConfirmation: state.ui.showDeleteConfirmation
-//   }
-// }
 
 function mapDispatchToProps (dispatch: any) {
   return {
@@ -159,6 +145,9 @@ function mapDispatchToProps (dispatch: any) {
     },
     updateUser: (updateUser: Partial<Pick<User, 'id'>>) => {
       dispatch(ActionGroup.updateUser(updateUser))
+    },
+    softDeleteUser: (softDeleteUser: Partial<Pick<User, 'id'>>) => {
+      dispatch(ActionGroup.softDeleteUser(softDeleteUser))
     },
     togglePasswordModal: () => {
       dispatch(ActionGroup.togglePasswordModal())

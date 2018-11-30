@@ -8,6 +8,11 @@ const initialState: any = {
 
 export default (state: any = initialState, action: any) => {
     switch(action.type) {
+        case 'users/CHANGE_USER_IN_EDIT':
+            return {
+                ...state,
+                editIndex: state.data.findIndex((u: User) => u.id === action.payload.id)
+            }
         case 'users/CHANGE_USER_DATA':
             const { id, field, value } = action.payload
             return {
@@ -33,7 +38,18 @@ export default (state: any = initialState, action: any) => {
         case 'users/UPDATE_FULFILLED':
             return {
                 ...state,
-                editIndex: -1
+                inCreateMode: false,
+                editIndex: -1,
+            }
+        case 'users/SOFT_DELETE_FULFILLED':
+            return {
+                ...state,
+                editIndex: -1,
+                data: state.data.map((u: User) => {
+                    return u.id === action.payload.data.id ? {
+                         ...u, isActive: false, 
+                        } : u
+                })
             }
         case 'users/ENTER_CREATE_MODE':
             const newData = [...state.data];
@@ -44,11 +60,6 @@ export default (state: any = initialState, action: any) => {
                 inCreateMode: true,
                 editIndex: 0,
             };
-        case 'users/CHANGE_USER_IN_EDIT':
-            return {
-                ...state,
-                editIndex: state.data.findIndex((u: User) => u.id === action.payload.id)
-            }
         default:
             return state;
     }
