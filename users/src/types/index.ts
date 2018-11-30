@@ -27,8 +27,12 @@ export type UIState = {
 }
 
 export type ValidationState = {
-    toValidate: string | null,
-    schema: any,
+    validator: any,
+    generatePatch: any,
+    patch: [],
+    inEdit: string | null,
+    userInEdit: Partial<Pick<User, "id">>,
+    backupUserData: Partial<Pick<User, "id">>,
 }
 
 export type GridState = {
@@ -61,7 +65,7 @@ export const newUserTemplate: User = {
     firstName: "",
     lastName: "",
     username: "",
-    password: "Circular>>0x08<<",
+    password: "",
     isActive: true,
     isEntryAdmin: false,
     isListAdmin: false,

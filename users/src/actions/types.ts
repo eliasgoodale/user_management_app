@@ -29,9 +29,9 @@ export interface CreateUser {
     payload: any
 }
 
-export interface EditIdChange {
-    type: 'users/CHANGE_EDIT_ID',
-    payload: string,
+export interface ChangeUserInEdit {
+    type: 'users/CHANGE_USER_IN_EDIT',
+    payload: Partial<Pick<User,'id'>>,
 }
 export interface EnterCreateMode {
     type: 'users/ENTER_CREATE_MODE',

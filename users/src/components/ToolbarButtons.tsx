@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import { userPassesConstraintValidation as valid } from '../validation'
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 
+
+const inDEV = true;
 const styles = ({
   container: {
     display: "flex",
@@ -55,19 +57,22 @@ class ToolbarButtons extends Component <any, {}> {
 
   render () {
     const {
+      backupData,
+      backupUserData,
+      userInEdit,
+      inEdit,
+      validator,
+      patch,
       togglePasswordModal,
       cancelChanges,
       enterCreateMode,
-      backupData,
-      userInEdit,
-      inEdit,
       createUser,
       updateUser,
       showDeleteConfirmation,
       toggleDeleteConfirmation,
       softDeleteUser } = this.props;
-    const backupUserData = backupData.find((user: User) => user.id === inEdit);
-    const changed = JSON.stringify(userInEdit[0]) !== JSON.stringify(backupUserData)
+   
+    const changed = JSON.stringify(userInEdit) !== JSON.stringify(backupUserData)
   return (
     
   <div style={styles.container} >
@@ -92,8 +97,10 @@ class ToolbarButtons extends Component <any, {}> {
       </Button>
       <Button 
         variant="contained" size="small" style={styles.button} 
-        disabled={!changed || !valid(userInEdit[0])}
-        onClick={e => inEdit === 'temp' ? createUser(userInEdit): updateUser(userInEdit)}>
+        disabled={!changed || !validator(userInEdit)}
+        onClick={() => inEdit === 'temp' ? 
+          createUser(userInEdit): 
+          updateUser(inDEV ? userInEdit : {id: userInEdit.id, patch: patch})}>
         <SaveIcon style={styles.icon} />
         Save
       </Button>
@@ -113,18 +120,31 @@ class ToolbarButtons extends Component <any, {}> {
   );
 }
 }
-
 function mapStateToProps (state: any) {
   return {
+    inEdit: state.validation.inEdit,
+    backupUserData: state.validation.backupUserData,
+    userInEdit: state.validation.userInEdit,
+    validator: state.validation.validator,
+    patch: state.validation.patch,
+    generatePatch: state.validation.generatePatch,
+    /** 
+     * LINKED TO COLLECTION
+     */
     backupData: state.collection.data,
-    tableData: state.editor.data,
-    inEdit: state.editor.inEdit,
-    userInEdit: state.editor.userInEdit,
-    classes: styles,
-    showPasswordModal: state.ui.showPasswordModal,
-    showDeleteConfirmation: state.ui.showDeleteConfirmation
   }
 }
+// function mapStateToProps (state: any) {
+//   return {
+//     backupData: state.collection.data,
+//     tableData: state.editor.data,
+//     inEdit: state.editor.inEdit,
+//     userInEdit: state.editor.userInEdit,
+//     classes: styles,
+//     showPasswordModal: state.ui.showPasswordModal,
+//     showDeleteConfirmation: state.ui.showDeleteConfirmation
+//   }
+// }
 
 function mapDispatchToProps (dispatch: any) {
   return {

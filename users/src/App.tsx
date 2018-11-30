@@ -11,7 +11,8 @@ import {
   GridRowClickEvent,
   GridItemChangeEvent, 
   GridFilterChangeEvent,
-  GridToolbar } from '@progress/kendo-react-grid'
+  GridToolbar, 
+  GridSelectionChangeEvent} from '@progress/kendo-react-grid'
 
 import { 
   CompositeFilterDescriptor, 
@@ -33,6 +34,7 @@ interface UserGridProps {
   sort: SortDescriptor[];
   filter: CompositeFilterDescriptor;
   inEdit: string | null;
+  editIndex: number;
   inCreateMode: boolean;
   onSortChange(e: GridSortChangeEvent): void;
   onRowClick(e: GridRowClickEvent): void;
@@ -54,11 +56,7 @@ const header = {
   username: { title: 'Username', filter: 'text' },
   firstName: { title: 'First Name', filter: 'text' },
   lastName: { title: 'Last Name', filter: 'text'},
-  isActive: { 
-    title: 'Active',
-    filter: 'boolean',
-    cell: CheckboxCell,
-  },
+
   isEntryAdmin: { 
     title: 'Entry Admin',
     filter: 'boolean',
@@ -84,6 +82,11 @@ const header = {
     filter: 'boolean',
     cell: CheckboxCell,
   },
+  isActive: { 
+    title: 'Active',
+    filter: 'boolean',
+    cell: CheckboxCell,
+  },
 }
 
 /**
@@ -96,7 +99,10 @@ const styles = {
     maxHeight: 750,
   },
   grid: {
-    maxHeight: 750
+    maxHeight: 750,
+    container: {
+      flex: 2,
+    }
   }
 }
 
@@ -128,6 +134,7 @@ class UserGrid extends Component<UserGridProps, {}> {
           filter={filter}
           resizable
           editor="boolean"
+          editable={key !== "isActive"}
           // cell={(props) => <CheckboxCell {...props}/>}
           /> :
         <Column 
@@ -146,6 +153,7 @@ class UserGrid extends Component<UserGridProps, {}> {
       filter,
       inEdit,
       sort,
+      editIndex,
 
       /* Action Creators from mapDispatchToProps */
       getAllUsers,
@@ -168,6 +176,15 @@ class UserGrid extends Component<UserGridProps, {}> {
             (user: User) => Object.assign({ inEdit: user.id === inEdit}, user)),
               filter),
                 sort);
+      const currentIndex = tableData.findIndex((u: User) => u.id === inEdit);
+      
+      if (editIndex !== -1 && editIndex !== currentIndex) {
+        const swap = { ...tableData[currentIndex] };
+        const needsToBe = { ...tableData[editIndex] };
+        tableData[currentIndex] = needsToBe;
+        tableData[editIndex] = swap;
+      }
+      
 
     return (
       <React.Fragment>
@@ -180,7 +197,11 @@ class UserGrid extends Component<UserGridProps, {}> {
           filter={filter}
           editField="inEdit"
           onSortChange={onSortChange}
-          onRowClick={onRowClick}
+          onSelectionChange={onRowClick}
+          onRowClick={(e: GridRowClickEvent) => {
+            console.log(e);
+            onRowClick(e)
+          }}
           onItemChange={onItemChange}
           onFilterChange={onFilterChange}
           filterable
@@ -190,7 +211,7 @@ class UserGrid extends Component<UserGridProps, {}> {
         <GridToolbar>
           <ToolbarButtons/>
         </GridToolbar>
-          {[ this._columns]}
+          {[ this._columns ]}
         </Grid>
         </Paper>
         <Button onClick={getAllUsers}>
@@ -212,8 +233,9 @@ class UserGrid extends Component<UserGridProps, {}> {
 function mapStateToProps(state: GridState) {
   return {
     data: state.editor.data,
-    inEdit: state.editor.inEdit,
+    inEdit: state.validation.inEdit,
     inCreateMode: state.editor.inCreateMode,
+    editIndex: state.editor.editIndex,
     sort: state.sort,
     filter: state.filter,
   }
@@ -232,7 +254,7 @@ function mapDispatchToProps(dispatch: any) {
       dispatch(UserActionGroup.changeSort(e.sort))
     },
     onRowClick: (e: GridRowClickEvent) => {
-      dispatch(UserActionGroup.selectRow(e.dataItem.id))
+      dispatch(UserActionGroup.selectRow(e.dataItem))
     },
     onItemChange: (e: GridItemChangeEvent) => {
       dispatch(UserActionGroup.changeUserData(e.dataItem.id, e.field, e.value))

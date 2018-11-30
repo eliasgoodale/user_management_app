@@ -28,26 +28,38 @@
     },
     {
       "id": "zcduJT8",
-      "firstName": "Bob",
-      "lastName": "NewUser",
-      "username": "BnewUserfadsfdsaf",
-      "password": "superGuy",
+      "firstName": "Bobsss",
+      "lastName": "NewUdser",
+      "username": "BnffewUserfadsfdsaf",
+      "password": "ffffffff",
       "isActive": true,
       "isEntryAdmin": true,
-      "isListAdmin": true,
-      "isLocationManager": true,
+      "isListAdmin": false,
+      "isLocationManager": false,
       "isOperatorAdmin": false,
-      "isUserAdmin": false
+      "isUserAdmin": false,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/password",
+          "value": "changedPassword"
+        },
+        {
+          "op": "replace",
+          "path": "/username",
+          "value": "BnffewsUserfadsfdsaf"
+        }
+      ]
     },
     {
       "id": "aVIXzeF",
-      "firstName": "isss",
-      "lastName": "aguy",
-      "username": "Wellpt",
-      "password": "Circular>>0x08<<",
+      "firstName": "ssssssN",
+      "lastName": "sssssN",
+      "username": "ssssss",
+      "password": "howdyyo",
       "isActive": true,
-      "isEntryAdmin": false,
-      "isListAdmin": false,
+      "isEntryAdmin": true,
+      "isListAdmin": true,
       "isLocationManager": false,
       "isOperatorAdmin": false,
       "isUserAdmin": false
@@ -111,6 +123,19 @@
       "username": "bob fdsfsdf",
       "password": "Circular>>0x08<<",
       "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "Lz49v0L",
+      "firstName": "new",
+      "lastName": "User",
+      "username": "newUser",
+      "password": "password",
+      "isActive": true,
       "isEntryAdmin": false,
       "isListAdmin": false,
       "isLocationManager": false,

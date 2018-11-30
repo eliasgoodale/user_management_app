@@ -10,6 +10,8 @@ export default (state: SortDescriptor[] = initialState, action: any) => {
             return action.payload;
         case 'users/ENTER_CREATE_MODE':
             return [];
+        case 'users/CHANGE_USER_DATA':
+            return state.length > 0 && action.payload.field === state[0].field ? [] : state;
         default:
             return state;
     }

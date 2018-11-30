@@ -329,14 +329,14 @@
       "id": "4e4aa7da-31ac-4246-8859-2e50d52c0c84",
       "firstName": "Deleon",
       "lastName": "Hays",
-      "password": "0.38274228354208406",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": true,
       "isListAdmin": true,
       "isLocationManager": true,
       "isOperatorAdmin": false,
       "isUserAdmin": false,
-      "username": "DHays"
+      "username": "azsfdfeDHays"
     },
     {
       "id": "5de0dd7c-e777-409f-a2ca-c3fbb18cd636",
@@ -353,16 +353,16 @@
     },
     {
       "id": "adede1ff-c8a5-4c4d-a9d9-10bf3f22c75b",
-      "firstName": "Burch",
+      "firstName": "sssBurch",
       "lastName": "Manning",
-      "password": "-0.2666068999353289",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": true,
       "isListAdmin": true,
       "isLocationManager": true,
       "isOperatorAdmin": true,
       "isUserAdmin": true,
-      "username": "BManning"
+      "username": "ssssBManning"
     },
     {
       "id": "2bbe8667-8f58-4538-b048-aef90a6a46f1",
@@ -691,16 +691,16 @@
     },
     {
       "id": "b578761d-019b-4f0e-bf28-7bfc6ac8dfe1",
-      "firstName": "Roman",
-      "lastName": "Moses",
-      "password": "-0.3975280650739303",
+      "firstName": "Roman Catholic",
+      "lastName": "Moses status",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": false,
       "isListAdmin": true,
       "isLocationManager": false,
       "isOperatorAdmin": false,
       "isUserAdmin": false,
-      "username": "RMoses"
+      "username": "Deeep Thought"
     },
     {
       "id": "52b4fa4f-95fc-46c8-82ec-7031a5c54bb4",
@@ -836,14 +836,14 @@
       "id": "72b404a1-c055-4151-a17f-4630497d2402",
       "firstName": "Anders",
       "lastName": "Anderson",
-      "password": "-0.43500088986814583",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": true,
       "isListAdmin": true,
       "isLocationManager": false,
       "isOperatorAdmin": false,
       "isUserAdmin": false,
-      "username": "AAnderson"
+      "username": "sAAnderson"
     },
     {
       "id": "0eac893d-ef7e-4354-912a-b9fa844d84ca",
@@ -1148,14 +1148,14 @@
       "id": "d78719d6-bbcc-4d0b-8aaf-01e2cea2a991",
       "firstName": "Carlene",
       "lastName": "Bright",
-      "password": "0.18722266060298012",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": false,
       "isListAdmin": true,
       "isLocationManager": false,
       "isOperatorAdmin": true,
       "isUserAdmin": true,
-      "username": "CBright"
+      "username": "sdsfsCBrigsfdsfssht"
     },
     {
       "id": "b700460e-7880-4310-8eb3-98c98164285e",
@@ -1354,16 +1354,16 @@
     },
     {
       "id": "rhFH2ax",
-      "firstName": "uiljlijljljjk",
-      "lastName": "uoiupoupououpo",
-      "username": "0yiyiutyiguouiuh",
-      "password": "Circular>>0x08<<",
+      "firstName": "Zarles",
+      "lastName": "Yack",
+      "username": "Zarlack",
+      "password": "",
       "isActive": true,
-      "isEntryAdmin": false,
-      "isListAdmin": false,
-      "isLocationManager": false,
-      "isOperatorAdmin": false,
-      "isUserAdmin": false
+      "isEntryAdmin": true,
+      "isListAdmin": true,
+      "isLocationManager": true,
+      "isOperatorAdmin": true,
+      "isUserAdmin": true
     },
     {
       "id": "zJOs21U",

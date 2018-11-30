@@ -57,7 +57,7 @@ const PasswordForm = (props: any) => {
 		</form>
 		<DialogActionsBar>
 		<Button
-		onClick={() => onPasswordSubmit({ id: inEdit, password: confirm })} 
+		onClick={() => onPasswordSubmit({ id: inEdit, value: confirm })} 
 			
 			// userId: inEdit,
 			// patch: compare(	{ password: origVal },
@@ -76,9 +76,7 @@ const PasswordForm = (props: any) => {
 class PasswordModal extends React.Component <any, {}>{
 	public render() {
 		const {
-			inCreateMode,
-			updatePassword,
-			createPassword,
+			changePassword,
 			togglePasswordModal,
 			showPasswordModal,
 			inEdit } = this.props
@@ -91,7 +89,7 @@ class PasswordModal extends React.Component <any, {}>{
 				onClose={togglePasswordModal}>
 			<PasswordForm
 				inEdit={inEdit}
-				onPasswordSubmit={inCreateMode ? createPassword : updatePassword} 
+				onPasswordSubmit={changePassword} 
 				newVal="" />
 		</Dialog>}
 		</React.Fragment>
@@ -102,19 +100,15 @@ class PasswordModal extends React.Component <any, {}>{
 const mapStateToProps = (state: any) => {
     return {
 		inCreateMode: state.editor.inCreateMode,
-		inEdit: state.editor.inEdit,
+		inEdit: state.validation.inEdit,
 		showPasswordModal: state.ui.showPasswordModal,
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-
-		updatePassword: (update: any) => {
-            dispatch(ActionGroup.changeUserPassword(update));
-		},
-		createPassword: (created: any) => {
-			dispatch(ActionGroup.changeUserData(created.id, 'password', created.password))
+		changePassword: ({id, value}: any) => {
+			dispatch(ActionGroup.changeUserData(id, 'password', value))
 		},
 		togglePasswordModal: () => {
 			dispatch(ActionGroup.togglePasswordModal())

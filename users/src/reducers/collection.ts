@@ -15,7 +15,7 @@ export default (state: any = initialState, action: any) => {
                     ...state,
                     data: state.data.map((u: User) => {
                         return u.id === action.payload.data.id ? {
-                             ...action.payload.data 
+                             ...action.payload.data, password: "" 
                             } : u
                     })
                 }
@@ -24,9 +24,14 @@ export default (state: any = initialState, action: any) => {
                 ...state,
                 data: state.data.map((u: User) => {
                     return u.id === action.payload.data.id ? {
-                        ...action.payload.data
+                        ...action.payload.data, password: ""
                     } : u
                 })
+            }
+        case 'users/SYNC_DATA':
+            return {
+                ...state,
+                data: action.payload,
             }
         case 'users/CREATE_FULFILLED':
                 const newData = [...state.data];
@@ -42,7 +47,9 @@ export default (state: any = initialState, action: any) => {
                 ...state, 
                 fetching: false, 
                 fetched: true,
-                data: action.payload.data,
+                data: action.payload.data.map((u: User) => {
+                    return { ...u, password: "" };
+                }),
             }
         case 'users/GET_ALL_REJECTED':
             return {

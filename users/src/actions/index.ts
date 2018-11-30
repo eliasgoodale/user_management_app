@@ -37,7 +37,6 @@ export const createUser = (newUser: User): Types.CreateUser => ({
     payload: client.endpoints.users.create({...newUser, id: ""}),
 });
 
-
 export const enterCreateMode = (): Types.EnterCreateMode => ({
     type: 'users/ENTER_CREATE_MODE',
 })
@@ -56,15 +55,10 @@ export const softDeleteUser = (toDelete: User): Types.SoftDeleteUser => ({
     payload: client.endpoints.users.update(toDelete),
 })
 
-
-export const selectRow = (itemID: string): Types.EditIdChange => ({
-    type: 'users/CHANGE_EDIT_ID',
-    payload: itemID,
+export const selectRow = (dataItem: any): Types.ChangeUserInEdit => ({
+    type: 'users/CHANGE_USER_IN_EDIT',
+    payload: dataItem,
 });
-
-
-
-
 
 export const syncData = (data: User[]): Types.SyncData => ({
     type: 'users/SYNC_DATA',
@@ -72,11 +66,6 @@ export const syncData = (data: User[]): Types.SyncData => ({
         return {...u, password: ""}
     }),
 })
-
-
-
-
-
 
 
 export const togglePasswordModal = (): Types.TogglePasswordModal => ({
@@ -90,4 +79,10 @@ export const toggleDeleteConfirmation = (): Types.ToggleDeleteConfirmation => ({
 export const changeUserPassword = (patch: any): Types.ChangeUserDataPassword => ({
     type: 'users/CHANGE_USER_PASSWORD',
     payload: client.endpoints.users.update(patch),
+})
+
+export const logAction = (payload: any) => ({
+    type: "LOG_ACTION",
+    payload: payload,
+
 })
