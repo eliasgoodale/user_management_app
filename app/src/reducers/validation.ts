@@ -37,7 +37,7 @@ export default (state: any = initialState, action: any) => {
             };
         case 'users/CHANGE_USER_IN_EDIT':
             delete action.payload.inEdit;
-            return {
+            return state.inEdit === 'temp' ? state : {
                 ...state,
                 inEdit: action.payload.id,
                 userInEdit: {...action.payload, password: ""},

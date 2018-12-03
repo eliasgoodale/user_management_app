@@ -37,14 +37,9 @@ export default (state: any = initialState, action: any) => {
                     } : u
                 })
             }
-        case 'users/SYNC_DATA':
-            return {
-                ...state,
-                data: action.payload,
-            }
         case 'users/CREATE_FULFILLED':
-                const newData = [...state.data];
-                newData.unshift(action.payload.data);
+            const newData = [...state.data];
+            newData.unshift({...action.payload.data, password: ""});
             return {
                 ...state,
                 data: newData,
@@ -68,5 +63,6 @@ export default (state: any = initialState, action: any) => {
         }
         default:
             return state;
+
     }
 }

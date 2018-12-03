@@ -55,12 +55,12 @@ const initialState: any = {
 export default (state: any = initialState, action: any) => {
     switch(action.type) {
         case 'users/CHANGE_USER_IN_EDIT':
-            const index = state.data.findIndex((u: User) => u.id === action.payload.id);
-
-            return {
+            const newIndex = state.data.findIndex(
+                (u: User) => u.id === action.payload.id);
+            return state.inCreateMode ? state : {
                 ...state,
                 inEdit: action.payload.id,
-                editIndex: state.data.findIndex((u: User) => u.id === action.payload.id)
+                editIndex: newIndex
             }
         case 'users/CHANGE_USER_DATA':
             const { id, field, value } = action.payload
@@ -77,14 +77,15 @@ export default (state: any = initialState, action: any) => {
                 editIndex: -1,
             }
         case 'users/CANCEL_CHANGES':
+            const { data, inCreateMode } = state;
+            if (inCreateMode) {
+                data.shift();
+            }
             return {
                 ...state,
                 inCreateMode: false,
                 editIndex: -1,
                 inEdit: null,
-                data: state.data.map( (u: User) => {
-                   return u.id === action.payload.id ? { ...u, ...action.payload } : u 
-                })
             }
             /**
              * Each time the collection changes from a GET_ALL_FULFILLED during initial startup or a CREATE_FULFILLED 
@@ -107,9 +108,6 @@ export default (state: any = initialState, action: any) => {
                 inCreateMode: false,
                 editIndex: -1,
                 inEdit: null,
-                data: state.data.map((u:User) => {
-                    return u.id === 'temp' ? {...u, id: action.payload.data.id } : u;
-                })
             }
         // case 'users/REACTIVATE_USER_FULFILLED':
         //     return {

@@ -161,7 +161,9 @@ const handleSoftDelete = (action$: any, state$: any) => action$.pipe(
 )
 
 const loadEditUserBackup = (action$: any, state$: any) => action$.pipe(
-    filter(({ type }: any) => type === 'users/CHANGE_USER_IN_EDIT'),
+    filter(({ type }: any) => 
+    type === 'users/CHANGE_USER_IN_EDIT' && 
+    state$.value.editor.inCreateMode === false),
     map(({ payload }: any) =>  
         loadBackup(state$.value.collection.data.filter(
             (u: User) => u.id === payload.id)))
