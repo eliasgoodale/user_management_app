@@ -173,21 +173,9 @@ class UserGrid extends Component<UserGridProps, {}> {
        * props.sort:SortDescriptor and props.filter:CompositeFilterDescriptor
        * have at least one element.
        */
-
-      const tableData = 
-      orderBy(
-        filterBy(
-          data.map(
-            (user: User) => Object.assign({ inEdit: user.id === inEdit}, user)),
-              filter),
-                sort);
-      const currentIndex = tableData.findIndex((u: User) => u.id === inEdit);
-      
-      if (editIndex !== -1 && editIndex !== currentIndex) {
-        const swap = tableData[currentIndex];
-        tableData[currentIndex] = tableData[editIndex];
-        tableData[editIndex] = swap;
-      }
+      const currentIndex = data.findIndex((u: User) => u.id === inEdit);
+      // console.table(tableData);
+      // console.log(`editIndex: ${editIndex}, currentIndex: ${currentIndex} tableData len: ${tableData.length}`)
 
     return (
       <React.Fragment>
@@ -195,7 +183,7 @@ class UserGrid extends Component<UserGridProps, {}> {
         <PasswordModal/>
         <Paper style={styles.paper}>
         <Grid style={styles.grid}
-          data={tableData}
+          data={data}
           sort={sort}
           filter={filter}
           editField="inEdit"

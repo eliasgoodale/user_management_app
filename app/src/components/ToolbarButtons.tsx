@@ -69,6 +69,7 @@ class ToolbarButtons extends Component <any, {}> {
       createUser,
       updateUser,
       softDeleteUser,
+      reactivateUser,
       showDeleteConfirmation,
       toggleDeleteConfirmation } = this.props;
    
@@ -109,6 +110,10 @@ class ToolbarButtons extends Component <any, {}> {
           <CancelIcon style={styles.icon} />
           Cancel
         </Button>
+        {userInEdit.isActive === false && <Button variant="contained" size="small" style={styles.buttonRight}
+          onClick={() => reactivateUser({id: userInEdit.id, isActive: true })}>
+          Reactivate User
+        </Button>}
         {inEdit !== null && <Button variant="contained" size="small" style={styles.buttonRight}
           onClick={togglePasswordModal}>
           <VpnKey style={styles.icon}/>
@@ -148,6 +153,9 @@ function mapDispatchToProps (dispatch: any) {
     },
     softDeleteUser: (softDeleteUser: Partial<Pick<User, 'id'>>) => {
       dispatch(ActionGroup.softDeleteUser(softDeleteUser))
+    },
+    reactivateUser: (reactivate: Partial<Pick<User, 'id'>>) => {
+      dispatch(ActionGroup.reactivateUser(reactivate))
     },
     togglePasswordModal: () => {
       dispatch(ActionGroup.togglePasswordModal())
