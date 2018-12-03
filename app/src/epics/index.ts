@@ -84,7 +84,6 @@ const processData = (action$: any, state$: any) => action$.pipe(
              * add in the current userInEdit into the array.
              */
             if (currentIndex === -1) {
-                console.log('CALLED NOT IN ARRAY')
                 /**
                  * If the locked index is greater than or equal to the length of the processedData
                  * array, we need to push the edit user to the back.
@@ -110,7 +109,6 @@ const processData = (action$: any, state$: any) => action$.pipe(
                  */
            
             } else if (currentIndex != lockedIndex) {
-                console.log("FOUND IN ARRAY")
                 /**
                  * if the lockedIndex is greater than or equal to 
                  * the current length of the processedData we need to take the current
@@ -129,6 +127,9 @@ const processData = (action$: any, state$: any) => action$.pipe(
                     processedData.splice(currentIndex, 1)
                     processedData.splice(lockedIndex, 0, userInEdit);
                 }
+                /**
+                 * Finally if the indexes are the same, we just update the data.
+                 */
             } else {
                 processedData[lockedIndex] = {...userInEdit}
             }
