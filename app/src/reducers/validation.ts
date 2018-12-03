@@ -49,11 +49,11 @@ export default (state: any = initialState, action: any) => {
                 inEdit: "temp",
                 userInEdit: newUserTemplate,
                 backupUserData: newUserTemplate,
-            }
+            };
         case 'users/LOAD_BACKUP':
             return {
                 ...state,
-                backupUserData: { ...action.payload, password: "" },
+                backupUserData: action.payload,
             };
         default:
             return state;
