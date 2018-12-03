@@ -3,7 +3,7 @@ import { compare } from 'fast-json-patch'
 import { 
     userPassesConstraintValidation as constraintValidator,
     passwordPassesConstraintValidation as passwordValidator,
-} from '../validation'
+} from '../utils'
 
 const validator = (user: User ): boolean => {
     const toValidate = { ...user };

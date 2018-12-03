@@ -8,7 +8,7 @@ import VpnKey from '@material-ui/icons/VpnKey'
 import * as ActionGroup from '../actions';
 import { User } from '../types';
 import { connect } from 'react-redux';
-import { userPassesConstraintValidation as valid } from '../validation'
+import { userPassesConstraintValidation as valid } from '../utils'
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 
 
