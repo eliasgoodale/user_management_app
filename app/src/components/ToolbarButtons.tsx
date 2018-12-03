@@ -8,7 +8,7 @@ import VpnKey from '@material-ui/icons/VpnKey'
 import * as ActionGroup from '../actions';
 import { User } from '../types';
 import { connect } from 'react-redux';
-import { userPassesConstraintValidation as valid } from '../utils'
+
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 
 
@@ -42,7 +42,7 @@ const DeleteDialog = (props: any ) => {
         Cancel
         </Button>
       <Button variant="contained" size="small" color="primary" style={styles.buttonRight}
-        onClick={() => softDeleteUser({id:userInEdit.id, isActive: false})}>
+        onClick={() => softDeleteUser(userInEdit.id)}>
         Confirm
         </Button>
       </div>
@@ -57,7 +57,6 @@ class ToolbarButtons extends Component <any, {}> {
 
   render () {
     const {
-      backupData,
       backupUserData,
       userInEdit,
       inEdit,
@@ -110,15 +109,18 @@ class ToolbarButtons extends Component <any, {}> {
           <CancelIcon style={styles.icon} />
           Cancel
         </Button>
+
+        {/* 
+          Manage Password/ReactivateUser
         {userInEdit.isActive === false && <Button variant="contained" size="small" style={styles.buttonRight}
-          onClick={() => reactivateUser({id: userInEdit.id, isActive: true })}>
+          onClick={() => reactivateUser(userInEdit.id)}>
           Reactivate User
         </Button>}
         {inEdit !== null && <Button variant="contained" size="small" style={styles.buttonRight}
           onClick={togglePasswordModal}>
           <VpnKey style={styles.icon}/>
           Manage Password
-        </Button>}
+        </Button>} */}
       </div>
     );
   }
@@ -151,11 +153,11 @@ function mapDispatchToProps (dispatch: any) {
     updateUser: (updateUser: Partial<Pick<User, 'id'>>) => {
       dispatch(ActionGroup.updateUser(updateUser))
     },
-    softDeleteUser: (softDeleteUser: Partial<Pick<User, 'id'>>) => {
-      dispatch(ActionGroup.softDeleteUser(softDeleteUser))
+    softDeleteUser: (id: string) => {
+      dispatch(ActionGroup.softDeleteUser(id))
     },
-    reactivateUser: (reactivate: Partial<Pick<User, 'id'>>) => {
-      dispatch(ActionGroup.reactivateUser(reactivate))
+    reactivateUser: (id: string) => {
+      dispatch(ActionGroup.reactivateUser(id))
     },
     togglePasswordModal: () => {
       dispatch(ActionGroup.togglePasswordModal())

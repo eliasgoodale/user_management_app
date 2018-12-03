@@ -45,9 +45,9 @@ export const syncData = (data: User[]): Types.SyncData => ({
     payload: data,
 })
 
-export const reactivateUser = (reactivate: Partial<Pick<User, 'id'>>) => ({
+export const reactivateUser = (id: string) => ({
     type: 'users/REACTIVATE_USER',
-    payload: client.endpoints.users.update(reactivate)
+    payload: client.endpoints.users.update({id: id, isActive: true})
 })
 
 
@@ -64,9 +64,9 @@ export const createUser = (newUser: User): Types.CreateUser => ({
     payload: client.endpoints.users.create({...newUser, id: ""}),
 });
 
-export const softDeleteUser = (toDelete: any): Types.SoftDeleteUser => ({
+export const softDeleteUser = (id: string): Types.SoftDeleteUser => ({
     type: 'users/SOFT_DELETE',
-    payload: client.endpoints.users.update(toDelete),
+    payload: client.endpoints.users.update({id: id, isActive: false}),
 })
 
 export const updateUser = (toUpdate: Partial<Pick<User, 'id'>>): Types.UpdateUser => ({

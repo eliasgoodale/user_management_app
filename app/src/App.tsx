@@ -11,8 +11,7 @@ import {
   GridRowClickEvent,
   GridItemChangeEvent, 
   GridFilterChangeEvent,
-  GridToolbar, 
-  GridSelectionChangeEvent} from '@progress/kendo-react-grid'
+  GridToolbar } from '@progress/kendo-react-grid'
 
 import { Operation } from 'fast-json-patch';
 
@@ -28,7 +27,8 @@ import {
   AlertDialog,
   CheckboxCell,
   PasswordModal,
-  ToolbarButtons, 
+  ToolbarButtons,
+  CommandCell
   } from './components'
 
 interface UserGridProps {
@@ -44,6 +44,8 @@ interface UserGridProps {
   onItemChange(e: GridItemChangeEvent): void;
   onFilterChange(e: GridFilterChangeEvent): void;
   getAllUsers(): void;
+  reactivateUser(): void;
+  togglePasswordModal(): void;
   syncData(data: User[]): void;
 }
 
@@ -109,11 +111,11 @@ const styles = {
   }
 }
 
-class UserGrid extends Component<UserGridProps, {}> {
+class UserGrid extends Component<any, {}> {
 
   private _columns: JSX.Element[];
 
-  public constructor (props: UserGridProps) {
+  public constructor (props: any) {
     super(props);
     this._columns = this.createColumns(header)
   }
@@ -165,7 +167,9 @@ class UserGrid extends Component<UserGridProps, {}> {
       onSortChange,
       onRowClick,
       onItemChange,
-      onFilterChange } = this.props
+      onFilterChange,
+      reactivateUser,
+      togglePasswordModal, } = this.props
 
       /**
        * This function adds the inEdit:boolean property to the user 
@@ -197,7 +201,10 @@ class UserGrid extends Component<UserGridProps, {}> {
         <GridToolbar>
           <ToolbarButtons/>
         </GridToolbar>
-          {[ this._columns ]}
+          {[<Column key="command-cell"
+              filterable={false}
+              sortable={false}
+              cell={CommandCell(togglePasswordModal, reactivateUser, inEdit)}/>, this._columns ]}
         </Grid>
         </Paper>
         <Button onClick={getAllUsers}>
@@ -248,6 +255,12 @@ function mapDispatchToProps(dispatch: any) {
     },
     onFilterChange: (e: GridFilterChangeEvent) => {
       dispatch(UserActionGroup.changeFilter(e.filter))
+    },
+    reactivateUser: (id: string) => {
+      dispatch(UserActionGroup.reactivateUser(id))
+    },
+    togglePasswordModal: () => {
+      dispatch(UserActionGroup.togglePasswordModal());
     },
     syncData: (data: User[]) => {
       dispatch(UserActionGroup.syncData(data));
