@@ -28,6 +28,15 @@ export default (state: any = initialState, action: any) => {
                     } : u
                 })
             }
+        case 'users/REACTIVATE_USER_FULFILLED':
+            return {
+                ...state,
+                data: state.data.map((u: User) => {
+                    return u.id === action.payload.data.id ? {
+                        ...action.payload.data, password: ""
+                    } : u
+                })
+            }
         case 'users/SYNC_DATA':
             return {
                 ...state,

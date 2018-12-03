@@ -50,6 +50,8 @@ const getProcessedData = (data: any) => ({
  */
 const processData = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => 
+        type === 'users/REACTIVATE_USER_FULFILLED' ||
+        type === 'users/SOFT_DELETE_FULFILLED' ||
         type === 'users/GET_ALL_FULFILLED' || 
         type === 'users/CHANGE_FILTER' || 
         type === 'users/CHANGE_SORT'),

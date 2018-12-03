@@ -207,6 +207,19 @@
       "isLocationManager": false,
       "isOperatorAdmin": false,
       "isUserAdmin": false
+    },
+    {
+      "id": "T15Bk_T",
+      "firstName": "MMMMM",
+      "lastName": "MMMMM",
+      "username": "MMMMM",
+      "password": "MMMMMMM",
+      "isActive": true,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
     }
   ]
 }

@@ -111,26 +111,25 @@ export default (state: any = initialState, action: any) => {
                     return u.id === 'temp' ? {...u, id: action.payload.data.id } : u;
                 })
             }
-        case 'users/REACTIVATE_USER_FULFILLED':
-            return {
-                ...state,
-                inCreateMode: false,
-                editIndex: -1,
-                inEdit: null,
-                data: state.data.map((u: User) => {
-                        return u.id === action.payload.data.id ? 
-                        { ...u, isActive: true, } : u
-                })
-            }
-        case 'users/SOFT_DELETE_FULFILLED':
-            return {
-                ...state,
-                editIndex: -1,
-                data: state.data.map((u: User) => {
-                    return u.id === action.payload.data.id ? 
-                    { ...u, isActive: false, } : u
-                })
-            }
+        // case 'users/REACTIVATE_USER_FULFILLED':
+        //     return {
+        //         ...state,
+        //         inCreateMode: false,
+        //         editIndex: -1,
+        //         inEdit: null,
+        //         data: state.data.map((u: User) => {
+        //                 return u.id === action.payload.data.id ? 
+        //                 { ...u, isActive: true, } : u
+        //         })
+        //     }
+        // case 'users/SOFT_DELETE_FULFILLED':
+        //     let removed = state.data;
+        //     removed.splice(state.editIndex, 1)
+        //     return {
+        //         ...state,
+        //         editIndex: -1,
+        //         data: removed,
+        //     }
             /**
              * 
              * RXJS chain with sync data to get first default filter
