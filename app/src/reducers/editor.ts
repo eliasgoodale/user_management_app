@@ -82,56 +82,29 @@ export default (state: any = initialState, action: any) => {
                 data.shift();
             }
             return {
-                ...state,
                 inCreateMode: false,
                 editIndex: -1,
                 inEdit: null,
+                data: data,
             }
-            /**
-             * Each time the collection changes from a GET_ALL_FULFILLED during initial startup or a CREATE_FULFILLED 
-             * when getting a new user ID back from the server to replace the temp ID in the table.
-             * Each time data is retreived in this way from the collection the inEdit property is added
-             * to each user object.
-             */
+    /**
+     * Each time the collection changes from a GET_ALL_FULFILLED during initial startup or a CREATE_FULFILLED 
+     * when getting a new user ID back from the server to replace the temp ID in the table.
+     * Each time data is retreived in this way from the collection the inEdit property is added
+     * to each user object.
+     */
         case 'users/GET_PROCESSED_DATA':
             return {
                 ...state, 
                 data: action.payload
             };
-            /**
-             * On every fulfilled create we replace the editor temp id with the id returned
-             * from the server
-             */
         case 'users/CREATE_FULFILLED':
             return {
                 ...state,
                 inCreateMode: false,
                 editIndex: -1,
                 inEdit: null,
-            }
-        // case 'users/REACTIVATE_USER_FULFILLED':
-        //     return {
-        //         ...state,
-        //         inCreateMode: false,
-        //         editIndex: -1,
-        //         inEdit: null,
-        //         data: state.data.map((u: User) => {
-        //                 return u.id === action.payload.data.id ? 
-        //                 { ...u, isActive: true, } : u
-        //         })
-        //     }
-        // case 'users/SOFT_DELETE_FULFILLED':
-        //     let removed = state.data;
-        //     removed.splice(state.editIndex, 1)
-        //     return {
-        //         ...state,
-        //         editIndex: -1,
-        //         data: removed,
-        //     }
-            /**
-             * 
-             * RXJS chain with sync data to get first default filter
-             */
+            };
         case 'users/ENTER_CREATE_MODE':
             const newData = [...state.data];
             newData.unshift(newUserTemplate);
