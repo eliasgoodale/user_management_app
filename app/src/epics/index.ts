@@ -38,31 +38,31 @@ const getProcessedData = (data: any) => ({
 /**
  * 
  * Each time we get a GET_ALL_FULFILLED during initial startup
- * or change the sort/filter of the table we nee
+ * or change the sort/filter of the table we need to process the data from the collection to the 
+ * editor. Whenever we go to make a change to our collection representing the most up to date
+ * version of the data, or when we change our sort and filter parameters with a user in edit,
+ * this function reacts by applying the sort and filter functions to the data received from
+ * those actions, searching for the index matching the current user in edit if any, and ensuring
+ * that the found index matches the index in the new data. Else it will determine if it needs to replace
+ * or add in the data, retreive the userInEdit data from the current validation state,
+ * and insert that user at the optimal index.
  * 
  */
 const processData = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => 
         type === 'users/GET_ALL_FULFILLED' || 
-        type === 'users/CREATE_FULFILLED'),
+        type === 'users/CHANGE_FILTER' || 
+        type === 'users/CHANGE_SORT'),
     withLatestFrom(state$),
     map(() => {
         const { validation, editor, collection, filter, sort } = state$.value;
         const { inEdit } = validation;
-        const editorData = collection.data.map(((u: User) => {
-            return Object.assign({ inEdit: u.id === inEdit}, u)
-        }))
-        const processedData = filterBy(orderBy(editorData, sort), filter);
-
-
+        const processedData = filterBy(orderBy(collection.data, sort), filter);
         /**
-         * If nothing is in edit we dont need to search for the index and 
+         * If nothing is in edit we dont need to do anything 
          * we can just returned the processed data
          */
-        if (validation.inEdit === null) {
-            getProcessedData(processedData);
-        }
-        else {
+        if (inEdit !== null) {
         /**
          * Else we have an inEdit user so we search through the filtered/sorted data
          * for that index.
@@ -70,7 +70,7 @@ const processData = (action$: any, state$: any) => action$.pipe(
             /**
              * Index we were at before the data processing
              */
-            const lockedIndex = state$.editor.editIndex;
+            const lockedIndex = editor.editIndex;
             /**
              * Index our where current user in edit currently resides after processing
              */
@@ -84,6 +84,7 @@ const processData = (action$: any, state$: any) => action$.pipe(
              * add in the current userInEdit into the array.
              */
             if (currentIndex === -1) {
+                console.log('CALLED NOT IN ARRAY')
                 /**
                  * If the locked index is greater than or equal to the length of the processedData
                  * array, we need to push the edit user to the back.
@@ -109,6 +110,7 @@ const processData = (action$: any, state$: any) => action$.pipe(
                  */
            
             } else if (currentIndex != lockedIndex) {
+                console.log("FOUND IN ARRAY")
                 /**
                  * if the lockedIndex is greater than or equal to 
                  * the current length of the processedData we need to take the current
@@ -127,18 +129,11 @@ const processData = (action$: any, state$: any) => action$.pipe(
                     processedData.splice(currentIndex, 1)
                     processedData.splice(lockedIndex, 0, userInEdit);
                 }
-            }
-            return getProcessedData(processedData);
-
+            } else {
+                processedData[lockedIndex] = {...userInEdit}
             }
         }
-
-        if (validation.inEdit && )
-        getProcessedData(
-        filterBy(
-            orderBy(state$.value.collection.data,
-                state$.value.sort),
-                    state$.value.filter))
+            return getProcessedData(processedData);
     })
 )
 
@@ -146,7 +141,7 @@ const handleValidationStateReset = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => 
         type === 'users/UPDATE_FULFILLED' || 
         type === 'users/CANCEL_CHANGES' ||
-        type === 'users/CREATED_FULFILLED' ||
+        type === 'users/CREATE_FULFILLED' ||
         type === 'users/SOFT_DELETE_FULFILLED' ||
         type === 'users/REACTIVATE_USER_FULFILLED'),
     map(() => resetValidationState())
@@ -174,5 +169,5 @@ export default combineEpics(
     handleValidationStateReset,
     handleSoftDelete,
     loadEditUserBackup,
-    syncTableWithCollection, 
+    processData, 
 )

@@ -11,9 +11,9 @@ client.createEntity({name: 'users'});
 
 
 /** Actions that change editor data only*/
-export const cancelChanges = (rollbackData: User[]): Types.CancelChanges => ({
+export const cancelChanges = (backupUserData: User) => ({
     type: 'users/CANCEL_CHANGES',
-    payload: rollbackData,
+    payload: backupUserData,
 });
 
 export const changeFilter = (filter: CompositeFilterDescriptor): Types.ChangeFilter => ({
@@ -64,7 +64,7 @@ export const createUser = (newUser: User): Types.CreateUser => ({
     payload: client.endpoints.users.create({...newUser, id: ""}),
 });
 
-export const softDeleteUser = (toDelete: string): Types.SoftDeleteUser => ({
+export const softDeleteUser = (toDelete: any): Types.SoftDeleteUser => ({
     type: 'users/SOFT_DELETE',
     payload: client.endpoints.users.update(toDelete),
 })

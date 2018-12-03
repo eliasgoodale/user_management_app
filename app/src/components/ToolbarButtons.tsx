@@ -106,7 +106,7 @@ class ToolbarButtons extends Component <any, {}> {
         </Button>
         <Button variant="contained" size="small" style={styles.button}
           disabled={!inEdit}
-          onClick={e => cancelChanges(backupData)}>
+          onClick={() => cancelChanges(backupUserData)}>
           <CancelIcon style={styles.icon} />
           Cancel
         </Button>
@@ -139,7 +139,7 @@ function mapStateToProps (state: any) {
 
 function mapDispatchToProps (dispatch: any) {
   return {
-    cancelChanges: (backup: User[]) => {
+    cancelChanges: (backup: User) => {
       dispatch(ActionGroup.cancelChanges(backup))
     },
     enterCreateMode: () => {

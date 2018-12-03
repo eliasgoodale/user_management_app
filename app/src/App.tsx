@@ -173,17 +173,16 @@ class UserGrid extends Component<UserGridProps, {}> {
        * props.sort:SortDescriptor and props.filter:CompositeFilterDescriptor
        * have at least one element.
        */
-      const currentIndex = data.findIndex((u: User) => u.id === inEdit);
+      const tableData = data.map( (u: User) => {return {...u, inEdit: u.id === inEdit}})
       // console.table(tableData);
       // console.log(`editIndex: ${editIndex}, currentIndex: ${currentIndex} tableData len: ${tableData.length}`)
-
     return (
       <React.Fragment>
         <AlertDialog/>
         <PasswordModal/>
         <Paper style={styles.paper}>
         <Grid style={styles.grid}
-          data={data}
+          data={tableData}
           sort={sort}
           filter={filter}
           editField="inEdit"

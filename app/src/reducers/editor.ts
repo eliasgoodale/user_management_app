@@ -82,7 +82,9 @@ export default (state: any = initialState, action: any) => {
                 inCreateMode: false,
                 editIndex: -1,
                 inEdit: null,
-                data: action.payload
+                data: state.data.map( (u: User) => {
+                   return u.id === action.payload.id ? { ...u, ...action.payload } : u 
+                })
             }
             /**
              * Each time the collection changes from a GET_ALL_FULFILLED during initial startup or a CREATE_FULFILLED 
@@ -90,16 +92,25 @@ export default (state: any = initialState, action: any) => {
              * Each time data is retreived in this way from the collection the inEdit property is added
              * to each user object.
              */
-        case 'users/SYNC_DATA':
+        case 'users/GET_PROCESSED_DATA':
             return {
                 ...state, 
+                data: action.payload
+            };
+            /**
+             * On every fulfilled create we replace the editor temp id with the id returned
+             * from the server
+             */
+        case 'users/CREATE_FULFILLED':
+            return {
+                ...state,
                 inCreateMode: false,
                 editIndex: -1,
                 inEdit: null,
-                data: action.payload.map((u: User) => {
-                    return { ...u, inEdit: false }
-                }),
-            };
+                data: state.data.map((u:User) => {
+                    return u.id === 'temp' ? {...u, id: action.payload.data.id } : u;
+                })
+            }
         case 'users/REACTIVATE_USER_FULFILLED':
             return {
                 ...state,
@@ -124,25 +135,6 @@ export default (state: any = initialState, action: any) => {
              * 
              * RXJS chain with sync data to get first default filter
              */
-        case 'users/CHANGE_FILTER':
-            const { inEdit, editIndex} = state;
-            if (inEdit === null && editIndex === -1)
-            {
-                return {
-                    ...state,
-                    data: filterby
-
-                }
-            }
-            const filtered = filterBy(state.data, action.payload)
-            const filteredIndex = filtered.findIndex((u: any) => u.id === inEdit)
-            if (inEdit !== null && filteredIndex === -1)
-            console.table(filtered);
-            return {
-                ...state,
-                data: filtered,
-                
-            }
         case 'users/ENTER_CREATE_MODE':
             const newData = [...state.data];
             newData.unshift(newUserTemplate);
