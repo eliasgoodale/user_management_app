@@ -54,10 +54,10 @@
     },
     {
       "id": "pwVGZjv",
-      "firstName": "Ben",
+      "firstName": "Brian",
       "lastName": "Jones",
       "username": "BJones",
-      "password": "Circular>>0x08<<",
+      "password": "",
       "isActive": false,
       "isEntryAdmin": false,
       "isListAdmin": false,
@@ -69,8 +69,8 @@
       "id": "M7PftYS",
       "firstName": "AAAAA",
       "lastName": "AAAAA",
-      "username": "AAAAA",
-      "password": "AAAAAAAA --",
+      "username": "GGGGG",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": false,
       "isListAdmin": false,
@@ -278,13 +278,26 @@
       "firstName": "RRRRR",
       "lastName": "RRRRRR",
       "username": "RRRRRR",
-      "password": "RRRRRRRR",
+      "password": "",
       "isActive": true,
       "isEntryAdmin": true,
-      "isListAdmin": true,
+      "isListAdmin": false,
       "isLocationManager": true,
       "isOperatorAdmin": true,
       "isUserAdmin": true
+    },
+    {
+      "id": "Jv19uvx",
+      "firstName": "TTTTTT",
+      "lastName": "TTTTT",
+      "username": "TTTTTT",
+      "password": "TTTTTTT",
+      "isActive": true,
+      "isEntryAdmin": true,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
     }
   ]
 }
