@@ -27,7 +27,7 @@ export const changeSort = (sort: SortDescriptor[]): Types.ChangeSort => ({
 });
 
 export const changeUserData = (id: string, field: any, value: any): Types.ChangeUserData => ({
-    type: 'users/CHANGE_USER_DATA',
+    type: 'users/CHANGE_DATA',
     payload: {id, field, value}
 });
 

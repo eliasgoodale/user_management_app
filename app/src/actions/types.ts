@@ -17,7 +17,7 @@ export interface ChangeSort {
 }
 
 export interface  ChangeUserData {
-    type: 'users/CHANGE_USER_DATA',
+    type: 'users/CHANGE_DATA',
     payload: any,
 }
 export interface CloseAlertDialog {

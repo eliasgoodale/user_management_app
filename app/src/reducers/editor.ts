@@ -62,7 +62,7 @@ export default (state: any = initialState, action: any) => {
                 inEdit: action.payload.id,
                 editIndex: newIndex
             }
-        case 'users/CHANGE_USER_DATA':
+        case 'users/CHANGE_DATA':
             const { id, field, value } = action.payload
             return {
                 ...state,

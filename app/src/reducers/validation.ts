@@ -26,7 +26,7 @@ export default (state: any = initialState, action: any) => {
     switch(action.type) {
         case 'users/RESET_VALIDATION_STATE':
             return initialState;
-        case 'users/CHANGE_USER_DATA':
+        case 'users/CHANGE_DATA':
             const {id, field, value} = action.payload;
             const newData = { ...state.userInEdit, [field]: value };
             return {
