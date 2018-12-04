@@ -35,9 +35,13 @@ export function passwordPassesConstraintValidation (password: string): boolean {
 export function processDataWithStableIndex(operations: any, state: any) {
 	const { validation, editor, collection, filter, sort } = state;
 	const { userInEdit } = validation;
-	const { editIndex, inEdit } = editor;
+	const { editIndex, inEdit, inCreateMode } = editor;
 	const { sortFn, filterFn } = operations;
 	const processedData = filterFn(sortFn(collection.data, sort), filter);
+
+	if(inCreateMode) {
+		return [userInEdit, ...processedData];
+	}
 	/**
 	 * If nothing is in edit we dont need to do anything 
 	 * we can just returned the processed data

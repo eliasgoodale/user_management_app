@@ -73,6 +73,7 @@ export default (state: any = initialState, action: any) => {
         case 'users/RESET_VALIDATION_STATE':
             return {
                 ...state,
+                inCreateMode: false,
                 inEdit: null,
                 editIndex: -1,
             }
@@ -97,13 +98,6 @@ export default (state: any = initialState, action: any) => {
             return {
                 ...state, 
                 data: action.payload
-            };
-        case 'users/CREATE_FULFILLED':
-            return {
-                ...state,
-                inCreateMode: false,
-                editIndex: -1,
-                inEdit: null,
             };
         case 'users/ENTER_CREATE_MODE':
             const newData = [...state.data];
