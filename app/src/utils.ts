@@ -32,7 +32,7 @@ export function passwordPassesConstraintValidation (password: string): boolean {
  * Editor Data Pre Processing Procedure based on current state
  */
 
-export function processDataWithStableIndex(operations: any, state: any) {
+export function processData(operations: any, state: any, STABLE_INDEX: boolean) {
 	const { validation, editor, collection, filter, sort } = state;
 	const { userInEdit } = validation;
 	const { editIndex, inEdit, inCreateMode } = editor;
@@ -46,7 +46,7 @@ export function processDataWithStableIndex(operations: any, state: any) {
 	 * If nothing is in edit we dont need to do anything 
 	 * we can just returned the processed data
 	 */
-	if (inEdit !== null) {
+	if (inEdit !== null && STABLE_INDEX) {
 	/**
 	 * Else we have an inEdit user so we search through the filtered/sorted data
 	 * for that index.

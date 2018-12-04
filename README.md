@@ -63,19 +63,19 @@ result in the patch field
 
 ## Root Epic
 
-An epic is a function that intakes an observable stream of actions and returns a new action. Async with Redux either requires manually creating an arduous amount of boilerplate actions for initial dispatch, promise resolution, and rejection, or a middleware solution that can dispatch actions based on the resolve/reject values of Promises(thunk/redux promise). 
-In addition, it is poor practice to dispatch an action in a reducer. This is because reducers are required to be pure functions of state with no side effects and "reacting" is a side effect. The root Epic receives all actions that occur in the application AFTER they have hit the reducers and reacts to that action by dispatching a new one. For instance, whenever a new REJECTED error comes back from the server the epic responds by opening the error dialog with that error. Rather than having to write all the repetitive case statements across multiple reducers for all rejected response behavior(setting the errors, setting the display to true, filtering by action entity etc) or in the worst case creating compound actions, you can use an epic to program reactively. Since it isnt a reducer, side effects and modifications to data are allowed. In our error handling case, it allows us to have a single generic error action that we can preprocess in any way. Later we may choose to not display certain errors to the user, or change the message displayed based on a response status. We can inject that dependency into the epic rather than creating variable types of actions/reducer logic.
+An epic is a function that intakes an observable stream of actions and returns a new action. Async with Redux either requires manually creating an arduous amount of boilerplate actions for initial dispatch, promise resolution, and rejection, or a middleware solution that can dispatch actions based on the resolve/reject values of Promises(thunk/redux promise). It is poor practice to dispatch an action in a reducer as this leads to complicated unreadable callback hell. Epics allow you to use RxJs to simplify the development process and increase code maintainability. 
+
+The root Epic receives all actions that occur in the application after they have hit the reducers and reacts to that action by dispatching a new one. For example, whenever a new REJECTED action is dispatched the Epic reacts by opening the error dialog with that error. Rather than having to include repetitive case statements across multiple reducers for all combinations of responses types, entities, and contexts you can use an epic to generically handle all of these cases with a pure function that returns a guaranteed, typesafe value you need without changing all of your reducers and complicating your codebase. Later we may choose to not display certain errors to the user, or change the message displayed based on a response status. We can inject that dependency into the epic rather than creating dependent cases for different app behaviors in all of our reducers. Since we can transform the action before dispatching it, we can maintain generic types of actions 
+corresponding to common ui behavior( OpenModal, SubmitData, CloseModal, etc ) and choose which reducer to dispatch to (error.ErrorModal, ui.PasswordModal, PasswordForm etc)
 
 ### reProcessData
 
-Filters any action that changes the collection, cancels a change to the current editor data, or changes the filter/sort of the table. It responds by delivering processed data to the editor. You may change the way data is processed by editing the processDataWithStableIndex function in app/utils, and
-adding the function to the operations object passed from this epic.
+Filters any action that changes the collection, cancels a change to the current editor data, or changes the filter/sort of the table. It responds by delivering processed data to the editor using the kendo-data-query functions orderBy and filterBy. You can change the way data is processed by editing the processData function in utils.
 
 
 ### handleValidationStateReset
 
-Writing a case for every type of action that resets the validation mode to its initial state is taxing and unmaintainable. This epic filters any action that needs to perform this common operation and dispatches a resetValidationState action. If you make a new action that
-needs to perform this behavior, add it to the list of actions this epic filters.
+Writing a case for every type of action that resets the validation mode to its initial state is unmaintainable. This epic filters any action that needs to reset the validation state and dispatches a resetValidationState action. 
 
 ### handleSoftDelete
 
@@ -83,7 +83,7 @@ Dispatches the delete confirmation toggle whenever the action to soft delete a u
 
 ### loadEditUserBackup
 
-Whenever a new user is selected in the editor (except in create mode) an action containing an unedited backup copy from the collection is dispatched to the validation reducer. This, combined with the userInEdit generates the patch document while editing the user.
+Whenever a new user is selected in the editor (except in create mode) this epic dispatches an action containing an unedited backup copy of the user in edit to the validation reducer. This, combined with the userInEdit generates the patch document while editing the user.
 
 
 

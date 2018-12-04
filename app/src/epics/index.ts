@@ -2,7 +2,7 @@ import  { syncData, toggleDeleteConfirmation} from '../actions';
 import { combineEpics } from 'redux-observable';
 import { map, filter, withLatestFrom} from 'rxjs/operators';
 import { User } from '../types';
-import { processDataWithStableIndex } from '../utils'
+import { processData } from '../utils'
 import { orderBy, filterBy } from '@progress/kendo-data-query'
 
 
@@ -59,9 +59,9 @@ const reProcessData = (action$: any, state$: any) => action$.pipe(
     withLatestFrom(state$),
     map(() => {
         const processedData = 
-        processDataWithStableIndex({
+        processData({
             sortFn: orderBy, 
-            filterFn: filterBy }, state$.value);
+            filterFn: filterBy }, state$.value, true);
         return deliverProcessedData(processedData);
     })
 )
