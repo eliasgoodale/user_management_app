@@ -6,7 +6,7 @@ import logger from 'redux-logger';
 import promise from 'redux-promise-middleware'
 import * as reducers from './reducers'
 
-import updateEpic from './epics'
+import rootEpic from './epics'
 import UserGrid from './App';
 import * as serviceWorker from './serviceWorker';
 import { createEpicMiddleware } from 'redux-observable'
@@ -19,8 +19,8 @@ const epicMiddleware = createEpicMiddleware();
 export default function configureStore() { 
     const createdStore = createStore( 
         rootReducer,
-        applyMiddleware( epicMiddleware, errorMiddleware, logger, promise(),))
-    epicMiddleware.run(updateEpic)
+        applyMiddleware(epicMiddleware, errorMiddleware, logger, promise(),))
+    epicMiddleware.run(rootEpic)
     return createdStore;
 }
 export const store = configureStore();
