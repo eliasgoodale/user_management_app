@@ -4,6 +4,7 @@ import '@progress/kendo-theme-default/dist/all.css'
 import * as UserActionGroup from './actions'
 import { User, GridState} from './types'
 
+
 import {
   Grid,
   GridColumn as Column,
@@ -115,6 +116,8 @@ class UserGrid extends Component<any, {}> {
 
   private _columns: JSX.Element[];
 
+
+
   public constructor (props: any) {
     super(props);
     this._columns = this.createColumns(header)
@@ -151,6 +154,7 @@ class UserGrid extends Component<any, {}> {
           />  
     })
   }
+  
   render() {
     const {
       /* State from mapStateToProps */
@@ -223,12 +227,12 @@ class UserGrid extends Component<any, {}> {
  * you can pass what state the component receives from the Provider as props.
  */
 
-function mapStateToProps(state: GridState) {
+function mapStateToProps(state: any) {
   return {
-    data: state.editor.data,
+    data: state.editor.present.data,
     inEdit: state.validation.inEdit,
-    inCreateMode: state.editor.inCreateMode,
-    editIndex: state.editor.editIndex,
+    inCreateMode: state.editor.present.inCreateMode,
+    editIndex: state.editor.present.editIndex,
     sort: state.sort,
     filter: state.filter,
     patch: state.validation.patch

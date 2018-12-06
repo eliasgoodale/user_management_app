@@ -99,7 +99,7 @@ class PasswordModal extends React.Component <any, {}>{
 
 const mapStateToProps = (state: any) => {
     return {
-		inCreateMode: state.editor.inCreateMode,
+		inCreateMode: state.editor.present.inCreateMode,
 		inEdit: state.validation.inEdit,
 		showPasswordModal: state.ui.showPasswordModal,
     }

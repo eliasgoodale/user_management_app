@@ -1,4 +1,12 @@
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
+import store from '../store';
+
+const keyListener = fromEvent(document, 'keydown');
+
+
 const initialState = {
+    keylogger: keyListener.subscribe((e: Event) => store.dispatch({type: 'KEY_DOWN', payload: e})),
     showPasswordModal: false,
     showDeleteConfirmation: false,
 }

@@ -4,7 +4,7 @@ import { map, filter, withLatestFrom} from 'rxjs/operators';
 import { User } from '../types';
 import { processData } from '../utils'
 import { orderBy, filterBy } from '@progress/kendo-data-query'
-
+import { ActionCreators as UndoActionCreators } from 'redux-undo'
 
 const logValue = (payload: any) => ({
     type: "LOG_VALUE",
@@ -48,6 +48,7 @@ const deliverProcessedData = (data: any) => ({
  * and insert that user at the optimal index.
  * 
  */
+
 const reProcessData = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => 
         type === 'users/REACTIVATE_USER_FULFILLED' ||
@@ -76,6 +77,14 @@ const handleValidationStateReset = (action$: any, state$: any) => action$.pipe(
     map(() => resetValidationState())
 )
 
+const keyActionListener = (action$: any, state$: any) => action$.pipe(
+    filter(({ type, payload }: any) => 
+        type === 'KEY_DOWN' && payload.key === 'z' && payload.metaKey
+    ),
+    map(({payload} :any) =>payload.shiftKey ? 
+    UndoActionCreators.redo() : UndoActionCreators.undo() )
+)
+
 const handleRequestError = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => type.includes('REJECTED')),
     map(({ payload }: any) => displayError(payload))
@@ -96,6 +105,7 @@ const loadEditUserBackup = (action$: any, state$: any) => action$.pipe(
 )
 
 export default combineEpics(
+    keyActionListener,
     handleRequestError,
     handleValidationStateReset,
     handleSoftDelete,

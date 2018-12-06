@@ -1,5 +1,4 @@
 import { newUserTemplate, User, EditorState } from '../types'
-import { filterBy } from '@progress/kendo-data-query'
 
 const initialState: any = {
     editIndex: -1,
@@ -7,7 +6,6 @@ const initialState: any = {
     inCreateMode: false,
     data: [],
 }
-
 
 export default (state: any = initialState, action: any) => {
     switch(action.type) {

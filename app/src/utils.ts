@@ -35,7 +35,7 @@ export function passwordPassesConstraintValidation (password: string): boolean {
 export function processData(operations: any, state: any, STABLE_INDEX: boolean) {
 	const { validation, editor, collection, filter, sort } = state;
 	const { userInEdit } = validation;
-	const { editIndex, inEdit, inCreateMode } = editor;
+	const { editIndex, inEdit, inCreateMode } = editor.present;
 	const { sortFn, filterFn } = operations;
 	const processedData = filterFn(sortFn(collection.data, sort), filter);
 
@@ -120,3 +120,4 @@ export function processData(operations: any, state: any, STABLE_INDEX: boolean) 
 	}
 		return processedData;
 }
+
