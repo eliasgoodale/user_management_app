@@ -72,7 +72,6 @@ class ToolbarButtons extends Component <any, {}> {
       showDeleteConfirmation,
       toggleDeleteConfirmation } = this.props;
    
-    const changed = JSON.stringify(userInEdit) !== JSON.stringify(backupUserData)
   return (
     <div style={styles.container} >
       <DeleteDialog 
@@ -96,7 +95,7 @@ class ToolbarButtons extends Component <any, {}> {
         </Button>
         <Button 
           variant="contained" size="small" style={styles.button} 
-          disabled={!changed || !validator(userInEdit)}
+          disabled={patch.length === 0 || !validator(userInEdit)}
           onClick={() => inEdit === 'temp' ? 
             createUser(userInEdit): 
             updateUser(inDEV ? userInEdit : {id: userInEdit.id, patch: patch})}>
